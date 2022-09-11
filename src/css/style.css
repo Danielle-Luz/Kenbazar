@@ -31,9 +31,46 @@ h1, h2, h3, h4 {
     width: 100%;
 }
 
+.logo-menu {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 .logo {
     font-size: 28px;
     font-weight: bold;
+}
+
+.hamburguer-menu {
+    align-items: center;
+    cursor: pointer;
+    display: none;
+    flex-direction: column;
+    height: 50px;
+    justify-content: center;
+    position: relative;
+    row-gap: 6px;
+    width: 50px;
+}
+
+.traco {
+    background-color: var(--cinza-escuro);
+    border-radius: 10px;
+    display: flex;
+    height: 8px;
+    transition: 200ms;
+    width: 80%;
+}
+.hamburguer-menu:hover .traco{
+    position: absolute;
+    transform: rotate(-30deg);
+}
+
+.hamburguer-menu:hover .traco:first-child {
+    position: absolute;
+    transform: rotate(30deg);
 }
 
 .links {
@@ -54,18 +91,23 @@ h1, h2, h3, h4 {
 
 section.container {
     padding-block: 40px;
+    column-gap: 30px;
 }
 
 .vitrine {
-    gap: 15px 30px ;
     display: flex;
     flex-wrap: wrap;
+    gap: 15px 30px;
 }
 
 .produto {
     border: 2px solid var(--branco-escuro);
     box-sizing: border-box;
     width: 250px;
+}
+
+.produto:hover {
+    border-color: var(--roxo-claro);
 }
 
 .vitrine .div-imagem {
@@ -84,8 +126,17 @@ section.container {
 .produto button {
     background-color: transparent;
     border: none;
+    border-bottom: 2px solid transparent;
+    box-sizing: border-box;
+    cursor: pointer;
     text-align: start;
     padding: 0;
+    width: fit-content;
+}
+
+.vitrine .produto button:hover {
+    border-bottom: 2px solid var(--roxo-claro);
+    color: var(--roxo-claro);
 }
 
 .categoria {
@@ -94,14 +145,6 @@ section.container {
     font-size: 10px;
     padding: 5px;
     width: fit-content;
-}
-
-.nome-produto {
-
-}
-
-.descricao {
-
 }
 
 .preco {
@@ -232,4 +275,72 @@ input[type=search], .b-pesquisar {
 
 .detalhes-compra p {
     font-size: 14px;
+}
+
+@media (max-width: 917px) {
+    section.container, .vitrine {
+        justify-content: center;
+    }
+
+    section.container {
+        max-width: 500px;
+    }
+}
+
+@media (max-width: 635px) {
+    section.container {
+        flex-direction: column;
+    }
+
+    section.container {
+        max-width: fit-content;
+    }
+}
+
+@media (max-width: 585px) {
+    .hamburguer-menu {
+        display: flex;
+    }
+
+    .logo {
+        padding-left: 10px;
+    }
+
+    nav {
+        background-color: var(--cinza-escuro);
+        display: none;
+    }
+
+    .links {
+        padding-block: 15px;
+    }
+
+    .links a {
+        color: var(--branco-escuro);
+    }
+
+    header, header .container {
+        padding: 0;
+    }
+
+    header .container {
+        row-gap: 0;
+    }
+
+    header div, .links {
+        flex-direction: column;
+        row-gap: 10px;
+    }
+
+    section.container {
+        row-gap: 20px;
+    }
+
+    input[type=search] {
+        width: 100%;
+    }
+
+    .carrinho {
+        width: initial;
+    }
 }
