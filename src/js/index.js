@@ -21,29 +21,6 @@ if (filtroNaoExiste) {
 //fazendo cópia da lista de produtos
 let listaProdutos = data.slice (0);
 
-//criando o carrinho no localSTorage caso não tenha sido criado
-if (!localStorage.getItem ("carrinho")) {
-    localStorage.setItem ("carrinho", JSON.stringify ([]));
-}
-
-vitrine.addEventListener ("click", evento => {
-    if (evento.target.className == "b-adicionar") {
-        const botao = evento.target;
-        const id = parseInt (botao.closest (".produto").id.split ("_")[1]) - 1;
-        const estaNoCarrinho = carrinhoAdicionados.querySelector (`#carrinho_${id + 1}`);
-        if (!estaNoCarrinho) {
-            const produto = data[id];
-            const carrinho = JSON.parse (localStorage.getItem ("carrinho"));
-            carrinho.push (produto);
-            localStorage.setItem ("carrinho", JSON.stringify (carrinho));
-            criarProdutoCarrinho (produto);
-            mostraCarrinho ();
-            alterarQuantidadeTotal (1, "+");
-            alterarValorTotal (1, "+", [carrinhoAdicionados.querySelectorAll (".produto")[carrinhoAdicionados.children.length - 1]]);
-        }
-    }
-});
-
 //filtragem com base no botão clicado
 for (let botao of todosBotoesHeader) {
     botao.onclick = () => {
@@ -81,15 +58,34 @@ hamburguerMenu.addEventListener ("click", () => {
     hamburguerMenu.classList.toggle ("rotacionar");
 });
 
-carrinhoAdicionados.innerHTML = "";
 listaProdutos = filtrarElementos (filtro, data);
-const carrinho = JSON.parse (localStorage.getItem ("carrinho"));
-
 renderizarProdutos (listaProdutos, criarProdutoVitrine);
+
+//adicionar ao carrinho
+vitrine.addEventListener ("click", evento => {
+    if (evento.target.className == "b-adicionar") {
+        const botao = evento.target;
+        const id = parseInt (botao.closest (".produto").id.split ("_")[1]) - 1;
+        const estaNoCarrinho = carrinhoAdicionados.querySelector (`#carrinho_${id + 1}`);
+        if (!estaNoCarrinho) {
+            const produto = data[id];
+            if (!localStorage.getItem ("carrinho")) {
+                localStorage.setItem ("carrinho", JSON.stringify ([]));
+            }
+            const carrinho = JSON.parse (localStorage.getItem ("carrinho"));
+            carrinho.push (produto);
+            localStorage.setItem ("carrinho", JSON.stringify (carrinho));
+            criarProdutoCarrinho (produto);
+            mostraCarrinho ();
+            alterarQuantidadeTotal (1, "+");
+        }
+    }
+});
+
+carrinhoAdicionados.innerHTML = "";
+const carrinho = JSON.parse (localStorage.getItem ("carrinho"));
 renderizarProdutos (carrinho, criarProdutoCarrinho);
 alterarQuantidadeTotal (carrinho.length, "+");
-alterarValorTotal (1, "+", carrinhoAdicionados.querySelectorAll (".produto"));
-mostraCarrinho ();
 
 carrinhoAdicionados.addEventListener ("click", evento => {
     if (evento.target.className == "b-remover") {
@@ -109,30 +105,25 @@ carrinhoAdicionados.addEventListener ("click", evento => {
             carrinhoAdicionados.parentNode.closest ("section").classList.add ("hidden");
         }
         alterarQuantidadeTotal (quantidadeCarrinho, "-");
-        alterarValorTotal (quantidadeCarrinho, "-", [produto]);
     }
     
     if (evento.target.className == "b-aumentar") {
         const botaoAumentar = evento.target;
-        const produto = botaoAumentar.closest (".produto");
         const inputQuantidade = botaoAumentar.parentNode.querySelector ("input");
         const quantidadeAtual = parseInt (inputQuantidade.value);
         if (quantidadeAtual < 20) {
             inputQuantidade.value = quantidadeAtual + 1;
             alterarQuantidadeTotal (1, "+")
-            alterarValorTotal (1, "+", [produto]);
         }
     }
 
     if (evento.target.className == "b-diminuir") {
-        const botaoDiminuir = evento.target;
-        const produto = botaoDiminuir.closest (".produto");
-        const inputQuantidade = botaoDiminuir.parentNode.querySelector ("input");
+        const botaoAumentar = evento.target;
+        const inputQuantidade = botaoAumentar.parentNode.querySelector ("input");
         const quantidadeAtual = parseInt (inputQuantidade.value);
         if (quantidadeAtual > 1) {
             inputQuantidade.value = quantidadeAtual - 1;
             alterarQuantidadeTotal (1, "-");
-            alterarValorTotal (1, "-", [produto]);
         }
     }
 });
@@ -177,6 +168,8 @@ function mostraCarrinho () {
         carrinhoAdicionados.parentNode.closest ("section").classList.remove ("hidden");
     }
 }
+
+mostraCarrinho ();
 
 function filtrarElementos (filtro, lista) {
     //caso não haja filtro, retorna a lista sem filtragem
@@ -253,16 +246,4 @@ function alterarQuantidadeTotal (quantidade, tipoAlteracao) {
         carrinhoQuantidade.innerText = (quantidadeAtual - quantidade);
     }
 }
-
-function alterarValorTotal (quantidade, tipoAlteracao, produtos) {
-    const carrinhoTotal = document.getElementById ("carrinho-total");
-    for (let produto of produtos) {
-        const precoProduto = parseFloat (produto.querySelector (".preco").innerText.split (" ")[1]);
-        const valorAtual = parseFloat (carrinhoTotal.innerText.split (" ")[1]);
-        if (tipoAlteracao == "+") {
-            carrinhoTotal.innerText = `R$ ${valorAtual + precoProduto * quantidade}`;
-        } else {
-            carrinhoTotal.innerText = `R$ ${valorAtual - precoProduto * quantidade}`;
-        }
-    }
-}
+//const carrinhoTotal = document.getElementById ("carrinho-total");
