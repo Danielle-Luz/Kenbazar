@@ -153,10 +153,13 @@ section.container {
     box-sizing: border-box;
     cursor: pointer;
     display: flex;
-    flex-direction: column;
-    height: 320px;
-    justify-content: flex-end;
     width: 250px;
+}
+
+.vitrine .produto {
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 320px;
 }
 
 .vitrine .produto:hover {
