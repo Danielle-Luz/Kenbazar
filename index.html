@@ -11,8 +11,7 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-        <script src="src/js/database.js" defer></script>
-        <script src="src/js/index.js" defer></script>
+        <script type="module" src="src/js/index.js" defer></script>
     </head>
     <body>
         <header>
@@ -27,10 +26,51 @@
                 </div>
                 <nav>
                     <ul class="links">
-                        <li><button class="pagina-atual">Todos</button></li>
-                        <li><button id="b-computadores">Computadores</button></li>
-                        <li><button id="b-hardware">Hardware</button></li>
-                        <li><button id="b-perifericos">Periféricos</button></li>
+                        <li>
+                            <button class="pagina-atual">Todos</button>
+                        </li>
+                        <li>
+                            <button id="b-computadores">Computadores</button>
+                            <ul class="links-subcategorias hidden">
+                                <li>
+                                    <button>Notebooks</button>
+                                </li>
+                                <li>
+                                    <button>PC</button>
+                                </li>
+                                <li>
+                                    <button>Monitores</button>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <button id="b-hardware">Hardware</button>
+                            <ul class="links-subcategorias hidden">
+                                <li>
+                                    <button>Placas de vídeo</button>
+                                </li>
+                                <li>
+                                    <button>Processador</button>
+                                </li>
+                                <li>
+                                    <button>SSD</button>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <button id="b-perifericos">Periféricos</button>
+                            <ul class="links-subcategorias hidden">
+                                <li>
+                                    <button>Headsets</button>
+                                </li>
+                                <li>
+                                    <button>Mouses</button>
+                                </li>
+                                <li>
+                                    <button>Teclados</button>
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
                 </nav>
             </div>
@@ -40,7 +80,8 @@
             </main>
             <aside>
                 <form>
-                    <input type="search" placeholder="Digite aqui sua pesquisa">
+                    <label for="campo-pesquisa" hidden>Insira um nome de produto ou categoria</label>
+                    <input type="search" id="campo-pesquisa" placeholder="Digite aqui sua pesquisa">
                     <button class="b-pesquisar">Pesquisar</button>
                 </form>
                 <article class="carrinho">

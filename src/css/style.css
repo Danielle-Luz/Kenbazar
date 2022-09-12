@@ -63,12 +63,12 @@ h1, h2, h3, h4 {
     transition: 200ms;
     width: 80%;
 }
-.hamburguer-menu:hover .traco{
+.rotacionar .traco{
     position: absolute;
     transform: rotate(-30deg);
 }
 
-.hamburguer-menu:hover .traco:first-child {
+.rotacionar .traco:first-child {
     position: absolute;
     transform: rotate(30deg);
 }
@@ -77,6 +77,11 @@ h1, h2, h3, h4 {
     align-items: center;
     display: flex;
     height: 100%;
+}
+
+.links>li {
+    position: relative;
+    width: 100%;
 }
 
 .links button {
@@ -88,10 +93,40 @@ h1, h2, h3, h4 {
     padding: 5px 10px;
 }
 
-.links button:hover {
-    background-color: var(--roxo-escuro);
+.links>li:first-child button:hover, .links .dropdown-ativo {
+    background-color: var(--roxo-claro);
+    border-radius: 10px;
     color: var(--branco-escuro);
+}
+
+.links .dropdown-ativo {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
     padding: 5px 10px;
+}
+
+.links-subcategorias {
+    background-color: var(--roxo-escuro);
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    box-shadow: 0 10px 10px -10px black;
+    height: fit-content;
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+}
+
+.links-subcategorias button {
+    border-radius: 0;
+    color: var(--branco-escuro);
+    display: block;
+    font-size: 12px;
+    width: 100%;
+    height: 30px;
+}
+
+.links li:hover .links-subcategorias {
+    display: block;
 }
 
 .pagina-atual {
@@ -113,6 +148,7 @@ section.container {
     border: 2px solid var(--branco-escuro);
     box-sizing: border-box;
     cursor: pointer;
+    height: fit-content;
     width: 250px;
 }
 
@@ -365,8 +401,17 @@ input[type=search], .b-pesquisar {
         padding-block: 15px;
     }
 
-    .links a {
+    .links, .links li, .links button {
+        width: 100%;
+    }
+
+    .links button {
         color: var(--branco-escuro);
+        text-align: center;
+    }
+
+    .links>li:first-child button:hover, .links .dropdown-ativo, .links-subcategorias {
+        border-radius: 0;
     }
 
     header, header .container {
