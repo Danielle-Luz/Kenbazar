@@ -81,7 +81,7 @@
             <aside>
                 <form>
                     <label for="campo-pesquisa" hidden>Insira um nome de produto ou categoria</label>
-                    <input type="search" id="campo-pesquisa" placeholder="Digite aqui sua pesquisa">
+                    <input type="search" id="campo-pesquisa" placeholder="Digite aqui sua pesquisa" autocomplete="off">
                     <button class="b-pesquisar">Pesquisar</button>
                 </form>
                 <article class="carrinho">
@@ -97,14 +97,14 @@
                             </section>
                         </div>
                         <section class="detalhes-compra">
-                            <div>
-                                <p class="identificador">Quantidade:</p>
-                                <p>3</p>
-                            </div>
-                            <div>
-                                <p class="identificador">Total:</p>
-                                <p>R$ 200.00</p>
-                            </div>
+                            <dl>
+                                <dt class="identificador">Quantidade:</dt>
+                                <dd id="carrinho-quantidade">0</dd>
+                            </dl>
+                            <dl>
+                                <dt class="identificador">Total:</dt>
+                                <dd id="carrinho-total">R$ 0</dd>
+                            </dl>
                         </section>
                     </section>
                 </article>
