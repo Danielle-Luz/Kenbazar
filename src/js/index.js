@@ -61,7 +61,6 @@ listaProdutos = filtrarElementos (filtro, data);
 renderizarProdutos (listaProdutos, criarProdutoVitrine);
 
 const bAdicionarCarrinho = document.querySelectorAll (".b-adicionar");
-console.log (bAdicionarCarrinho)
 
 //adicionar ao carrinho
 for (let botao of bAdicionarCarrinho) {
@@ -76,34 +75,39 @@ for (let botao of bAdicionarCarrinho) {
             const carrinho = JSON.parse (localStorage.getItem ("carrinho"));
             carrinho.push (produto);
             localStorage.setItem ("carrinho", JSON.stringify (carrinho));
-            criarProdutoCarrinho (produto);
+            const botaoExcluir = criarProdutoCarrinho (produto);
             mostraCarrinho ();
         }
     });
 }
 
+
 carrinhoAdicionados.innerHTML = "";
 const carrinho = JSON.parse (localStorage.getItem ("carrinho"));
 renderizarProdutos (carrinho, criarProdutoCarrinho);
-const botoesRemover = document.querySelectorAll (".b-remover");
 
-for (let botao of botoesRemover) {
-    botao.addEventListener ("click", () => {
-        const produto = botao.closest (".produto");
-        const id = parseInt (produto.id.split ("_")[1]);
-        const carrinho = JSON.parse (localStorage.getItem ("carrinho"));
-        const posicao = carrinho.findIndex (produto => {
-            return produto.id == id;
-        });
-        carrinho.splice (posicao, 1);
-        localStorage.setItem ("carrinho", JSON.stringify (carrinho));
-        produto.remove ();
-        if (carrinhoAdicionados.querySelectorAll ("figure").length == 0) {
-            carrinhoVazio.classList.remove ("hidden");
-            carrinhoAdicionados.parentNode.closest ("section").classList.add ("hidden");
-        }
+carrinhoAdicionados.addEventListener ("click", evento => {
+    if (evento.target.className == "b-remover") {
+        const botao = evento.target;
+        botao.addEventListener ("click",excluirProduto (botao));
+    }
+});
+
+function excluirProduto (botaoExcluir) {
+    const produto = botaoExcluir.closest (".produto");
+    const id = parseInt (produto.id.split ("_")[1]);
+    const carrinho = JSON.parse (localStorage.getItem ("carrinho"));
+    const posicao = carrinho.findIndex (produto => {
+        return produto.id == id;
     });
-}
+    carrinho.splice (posicao, 1);
+    localStorage.setItem ("carrinho", JSON.stringify (carrinho));
+    produto.remove ();
+    if (carrinhoAdicionados.querySelectorAll ("figure").length == 0) {
+        carrinhoVazio.classList.remove ("hidden");
+        carrinhoAdicionados.parentNode.closest ("section").classList.add ("hidden");
+    }
+};
 
 function mostraCarrinho () {
     if (carrinhoAdicionados.querySelectorAll ("figure").length > 0) {
@@ -162,7 +166,7 @@ function criarProdutoVitrine (produto) {
 }
 
 function criarProdutoCarrinho (produto) {
-    const figure = document.createElement ("figure");
+    let figure = document.createElement ("figure");
     figure.className = "produto";
     figure.id = `carrinho_${produto.id}`;
     figure.innerHTML = `
@@ -175,4 +179,7 @@ function criarProdutoCarrinho (produto) {
         <button class="b-remover">Remover produto</button>
     </figcaption>`
     carrinhoAdicionados.appendChild (figure);
+    figure = document.getElementById (`carrinho_${produto.id}`);
+    const botaoExcluir = figure.querySelector (".b-remover");
+    return botaoExcluir;
 }
