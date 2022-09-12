@@ -78,6 +78,7 @@ vitrine.addEventListener ("click", evento => {
             criarProdutoCarrinho (produto);
             mostraCarrinho ();
             alterarQuantidadeTotal (1, "+");
+            alterarValorTotal (1, "+", [carrinhoAdicionados.querySelectorAll (".produto")[carrinhoAdicionados.children.length - 1]]);
         }
     }
 });
@@ -86,6 +87,7 @@ carrinhoAdicionados.innerHTML = "";
 const carrinho = JSON.parse (localStorage.getItem ("carrinho"));
 renderizarProdutos (carrinho, criarProdutoCarrinho);
 alterarQuantidadeTotal (carrinho.length, "+");
+alterarValorTotal (1, "+", carrinhoAdicionados.querySelectorAll (".produto"));
 
 carrinhoAdicionados.addEventListener ("click", evento => {
     if (evento.target.className == "b-remover") {
@@ -105,25 +107,30 @@ carrinhoAdicionados.addEventListener ("click", evento => {
             carrinhoAdicionados.parentNode.closest ("section").classList.add ("hidden");
         }
         alterarQuantidadeTotal (quantidadeCarrinho, "-");
+        alterarValorTotal (quantidadeCarrinho, "-", [produto]);
     }
     
     if (evento.target.className == "b-aumentar") {
         const botaoAumentar = evento.target;
+        const produto = botaoAumentar.closest (".produto");
         const inputQuantidade = botaoAumentar.parentNode.querySelector ("input");
         const quantidadeAtual = parseInt (inputQuantidade.value);
         if (quantidadeAtual < 20) {
             inputQuantidade.value = quantidadeAtual + 1;
             alterarQuantidadeTotal (1, "+")
+            alterarValorTotal (1, "+", [produto]);
         }
     }
 
     if (evento.target.className == "b-diminuir") {
         const botaoAumentar = evento.target;
+        const produto = botaoAumentar.closest (".produto");
         const inputQuantidade = botaoAumentar.parentNode.querySelector ("input");
         const quantidadeAtual = parseInt (inputQuantidade.value);
         if (quantidadeAtual > 1) {
             inputQuantidade.value = quantidadeAtual - 1;
             alterarQuantidadeTotal (1, "-");
+            alterarValorTotal (1, "-", [produto]);
         }
     }
 });
@@ -246,4 +253,17 @@ function alterarQuantidadeTotal (quantidade, tipoAlteracao) {
         carrinhoQuantidade.innerText = (quantidadeAtual - quantidade);
     }
 }
-//const carrinhoTotal = document.getElementById ("carrinho-total");
+
+function alterarValorTotal (quantidade, tipoAlteracao, produtos) {
+    const carrinhoTotal = document.getElementById ("carrinho-total");
+    for (let produto of produtos) {
+        const precoProduto = parseFloat (produto.querySelector (".preco").innerText.split (" ")[1]);
+        const valorAtual = parseFloat (carrinhoTotal.innerText.split (" ")[1]);
+
+        if (tipoAlteracao == "+") {
+            carrinhoTotal.innerText = `R$ ${valorAtual + quantidade * precoProduto}`;
+        } else {
+            carrinhoTotal.innerText = `R$ ${valorAtual - quantidade * precoProduto}`;
+        }
+    }
+}
