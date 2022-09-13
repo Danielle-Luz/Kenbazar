@@ -81,6 +81,7 @@ header .container nav {
     background: linear-gradient(90deg, rgb(78, 78, 78) 0%, rgb(43, 43, 43) 100%);
     border: none;
     border-radius: 5px;
+    cursor: initial;
     color: white;
     font-size: 16px;
     font-weight: bold;
@@ -118,7 +119,7 @@ h1, h2, h3, h4 {
     padding-right: 10px;
 }
 
-.logo {
+.logo, .logo-menu a {
     color: white;
     font-size: 28px;
     font-weight: bold;
@@ -221,7 +222,6 @@ main.container {
     column-gap: 30px;
 }
 
-/*height: 420px; height: 880px;;*/
 .vitrine {
     display: flex;
     gap: 30px 10px;
@@ -331,7 +331,7 @@ button {
     transition: 200ms;
 }
 
-.produto button:hover {
+.vitrine .produto button:hover {
     background-color: white !important;
     color: rgb(12, 11, 19);
 }
@@ -350,7 +350,7 @@ button {
     width: fit-content;
 }
 
-.descricao {
+.produto .descricao {
     display: -webkit-box;
     max-width: 215px;
     overflow: hidden;
@@ -459,11 +459,11 @@ input[type=search], .b-pesquisar {
 }
 
 .carrinho-adicionados::-webkit-scrollbar {
-    width: 5px;
+    width: 8px;
 }
 
 .carrinho-adicionados::-webkit-scrollbar-thumb {
-    background-color: var(--cinza-claro);
+    background-color: rgb(158, 158, 158);
     border-radius: 10px;
 }
 
@@ -562,7 +562,7 @@ input[type=search], .b-pesquisar {
     width: 30px;
 }
 
-.container-quantidade button:hover {
+.carrinho-adicionados button:hover {
     color: var(--branco-escuro);
     background-color: var(--roxo-claro);
 }
@@ -617,12 +617,15 @@ footer div {
     width: 100%;
 }
 
-footer a {
+.categoria-footer {
+    background-color: transparent;
+    border: none;
     color: #29b9cc;
+    font-size: 16px;
     transition: 300ms;
 }
 
-footer a:hover {
+.categoria-footer:hover {
     color: white;
 }
 
@@ -676,6 +679,7 @@ footer small {
     main.container {
         max-width: 500px;
     }
+
 }
 
 @media (max-width: 933px) {
@@ -710,7 +714,6 @@ footer small {
         width: 100%;
     }
 }
-
 
 @media (max-width: 800px) {
     .banner img {

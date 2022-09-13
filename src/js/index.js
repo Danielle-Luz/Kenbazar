@@ -1,17 +1,17 @@
 import { data } from "./database.js";
-
 //elementos do dom
+const bLinks = document.querySelectorAll (".links>li>button");
+const navbar = document.querySelector (".links");
+const hamburguerMenu = document.querySelector (".hamburguer-menu");
 const vitrine = document.querySelector (".vitrine");
+const botaoPesquisar = document.querySelector (".b-pesquisar");
 const carrinhoAdicionados = document.querySelector (".carrinho-adicionados");
 const carrinhoVazio = document.querySelector (".carrinho-vazio");
-const bLinks = document.querySelectorAll (".links>li>button");
-const todosBotoesHeader = document.querySelectorAll (".links button");
-const hamburguerMenu = document.querySelector (".hamburguer-menu");
-const botaoPesquisar = document.querySelector (".b-pesquisar");
+const footer = document.querySelector ("footer");
 
 //obtenção de filtro ativos
 const filtro = JSON.parse (localStorage.getItem ("filtro"));
-//tentando converter falsy value em true
+//tentando converter possível falsy value em true
 const filtroNaoExiste = !filtro;
 if (filtroNaoExiste) {
     //setando lista vazia no local storage caso não exista
@@ -24,15 +24,6 @@ if (!localStorage.getItem ("carrinho")) {
 
 //fazendo cópia da lista de produtos
 let listaProdutos = data.slice (0);
-
-//filtragem com base no botão clicado
-for (let botao of todosBotoesHeader) {
-    botao.onclick = () => {
-        let filtro = botao.innerText != "Todos" ? botao.innerText : "";
-        localStorage.setItem ("filtro", JSON.stringify (filtro));
-        window.location.reload ();
-    }
-}
 
 //exibição do dropdown
 for (let botao of bLinks) {
@@ -56,16 +47,30 @@ for (let botao of bLinks) {
     }
 }
 
+//-------------------
+//CHAMADAS DE FUNÇÃO:
+//-------------------
+listaProdutos = filtrarElementos (filtro, data);
+renderizarProdutos (listaProdutos, criarProdutoVitrine);
+carrinhoAdicionados.innerHTML = "";
+const carrinho = JSON.parse (localStorage.getItem ("carrinho"));
+renderizarProdutos (carrinho, criarProdutoCarrinho);
+alterarQuantidadeTotal (carrinho.length, "+");
+alterarValorTotal (1, "+", carrinhoAdicionados.querySelectorAll (".produto"));
+mostraCarrinho ();
+
+
+//-------------------
+//LISTENERS:
+//-------------------
+navbar.addEventListener ("click", guardarFiltro);
+
 hamburguerMenu.addEventListener ("click", () => {
     const nav = document.querySelector ("nav");
     nav.style.display = nav.style.display == "flex" ? "none" : "flex";
     hamburguerMenu.classList.toggle ("rotacionar");
 });
 
-listaProdutos = filtrarElementos (filtro, data);
-renderizarProdutos (listaProdutos, criarProdutoVitrine);
-
-//adicionar ao carrinho
 vitrine.addEventListener ("click", evento => {
     if (evento.target.className == "b-adicionar") {
         const botao = evento.target;
@@ -79,16 +84,11 @@ vitrine.addEventListener ("click", evento => {
             criarProdutoCarrinho (produto);
             mostraCarrinho ();
             alterarQuantidadeTotal (1, "+");
-            alterarValorTotal (1, "+", [carrinhoAdicionados.querySelectorAll (".produto")[carrinhoAdicionados.children.length - 1]]);
+            const produtosCarrinho = carrinhoAdicionados.querySelectorAll (".produto");
+            alterarValorTotal (1, "+", [produtosCarrinho[produtosCarrinho.length - 1]]);
         }
     }
 });
-
-carrinhoAdicionados.innerHTML = "";
-const carrinho = JSON.parse (localStorage.getItem ("carrinho"));
-renderizarProdutos (carrinho, criarProdutoCarrinho);
-alterarQuantidadeTotal (carrinho.length, "+");
-alterarValorTotal (1, "+", carrinhoAdicionados.querySelectorAll (".produto"));
 
 carrinhoAdicionados.addEventListener ("click", evento => {
     if (evento.target.className == "b-remover") {
@@ -170,14 +170,31 @@ botaoPesquisar.addEventListener ("click", evento => {
     }
 });
 
+footer.addEventListener ("click", evento => {
+    guardarFiltro (evento);
+    window.scrollTo (0, 0);
+});
+
+
+//-------------------
+//DECLARAÇÕES DE FUNÇÕES:
+//-------------------
+function guardarFiltro (evento) {
+    if (evento.target.tagName == "BUTTON") {
+        let botao = evento.target;
+        let filtro = botao.innerText != "Todos" ? botao.innerText : "";
+        localStorage.setItem ("filtro", JSON.stringify (filtro));
+        window.location.reload ();
+    }
+}
+
+//função pra exibir ou mostrar a div "carrinho vazio"
 function mostraCarrinho () {
     if (carrinhoAdicionados.querySelectorAll ("figure").length > 0) {
         carrinhoVazio.classList.add ("hidden");
         carrinhoAdicionados.parentNode.closest ("section").classList.remove ("hidden");
     }
 }
-
-mostraCarrinho ();
 
 function filtrarElementos (filtro, lista) {
     //caso não haja filtro, retorna a lista sem filtragem
@@ -192,6 +209,7 @@ function filtrarElementos (filtro, lista) {
     }
 }
 
+//repete a função de criação para cada elemento da lista passada como argumento
 function renderizarProdutos (lista, funcaoCriacao) {
     for (let produto of lista) {
         funcaoCriacao (produto);
