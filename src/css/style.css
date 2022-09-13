@@ -1,3 +1,5 @@
+/*categoria: #2be6ff preço: #2be6ff*/
+
 :root {
     --roxo-escuro: #2E245E;
     --roxo-claro: #37268C; 
@@ -13,24 +15,75 @@
 
 body {
 	color: var(--cinza-escuro);
-    background: linear-gradient(90deg, rgb(39, 39, 39) 0%, rgba(0,0,0,1) 100%);
+    background: linear-gradient(-90deg, rgb(27, 37, 43) 0%, rgba(0,0,0,1) 100%);
     width: 100%;
 }
 
 header {
     display: flex;
-    padding-block: 40px 15px;
+    border-bottom: 1px solid rgb(43, 43, 43);
+    padding-block: 20px 15px;
 }
 
 .banner {
-    background-position: center;
-    background-size: cover;
+    align-items: center;
+    background-position: left;
+    background-size: contain;
+    background-repeat: no-repeat;
     border-radius: 10px;
-    display: block;
+    color: white;
+    display: flex;
     margin: 0 auto;
-    height: 250px;
-    margin-top: 30px;
+    height: 300px;
+    justify-content: space-between;
+    margin-top: 50px;
     width: 1200px;
+}
+
+.banner .texto {
+    padding-inline: 20px;
+    width: 600px;
+}
+
+.banner h1 {
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.texto-degrade {
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    background-image: linear-gradient(130deg, #e7e7e7 0%, #392bff 52%, #2be6ff 90%); 
+}
+
+.banner h1, .banner p {
+    line-height: 1.3em;
+}
+
+.banner p {
+    margin-bottom: 20px;
+}
+
+.botao-wrapper {
+    height: fit-content;
+    width: fit-content;
+}
+
+.banner button {
+    background: linear-gradient(90deg, rgb(78, 78, 78) 0%, rgb(43, 43, 43) 100%);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    height: fit-content;
+    text-transform: uppercase;
+    padding: 10px 20px;
+}
+
+.banner img {
+    width: 350px;
 }
 
 h1, h2, h3, h4 {
@@ -47,11 +100,14 @@ h1, h2, h3, h4 {
     width: 100%;
 }
 
-.logo-menu {
+.logo-menu, .logo-wrapper {
     align-items: center;
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
+}
+
+.logo-wrapper img {
+    padding-right: 10px;
 }
 
 .logo {
@@ -111,15 +167,12 @@ h1, h2, h3, h4 {
     padding: 5px 10px;
 }
 
-.links li:not(:last-child) button {
-    border-right: 1px solid white;
-    border-radius: 0;
-}
-
 .links>li:first-child button:hover, .links .dropdown-ativo {
     background-color: var(--branco-escuro);
     border-radius: 10px;
+    border: 0;
     color: var(--cinza-escuro);
+    font-weight: bold;
 }
 
 .links .dropdown-ativo {
@@ -129,7 +182,7 @@ h1, h2, h3, h4 {
 }
 
 .links-subcategorias {
-    background-color: var(--roxo-claro);
+    background-image: linear-gradient(130deg, #8cc9fc 0%, #2a8bc4 52%, #29b9cc 90%); 
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     height: fit-content;
@@ -140,11 +193,11 @@ h1, h2, h3, h4 {
 
 .links-subcategorias button {
     border-radius: 0;
-    color: var(--branco-escuro);
+    color: rgb(43, 43, 43);
     display: block;
-    font-size: 12px;
+    font-size: 13px;
+    font-weight: bold;
     width: 100%;
-    height: 30px;
 }
 
 .links li:hover .links-subcategorias {
@@ -156,17 +209,20 @@ h1, h2, h3, h4 {
 }
 
 main.container {
-    padding-block: 40px 20px;
+    padding-block: 40px 100px;
     column-gap: 30px;
 }
 
 /*background-image: radial-gradient(left at 0% 0%, #794fa9 0, #533a85 25%, #2e245e 50%, #0d0f39 75%, #00001b 100%);*/
 .vitrine {
     display: flex;
-    flex-wrap: wrap;
     gap: 30px 15px;
-    height: 900px;
+    width: 800px;
     overflow: auto;
+}
+
+.vitrine, aside {
+    padding-block: 20px;
 }
 
 .vitrine::-webkit-scrollbar {
@@ -178,11 +234,14 @@ main.container {
     border-radius: 5px;
 }
 
-.vitrine>li {
-    background-color: #FA8BFF;
+.vitrine>li, .botao-wrapper {
     background-image: linear-gradient(130deg, #e7e7e7 0%, #392bff 52%, #2be6ff 90%); 
     border-radius: 5px;
     padding: 2px;
+}
+
+.vitrine>li {
+    height: 420px;
 }
 
 .produto {
@@ -199,8 +258,7 @@ main.container {
 
 .vitrine .produto {
     flex-direction: column;
-    min-height: fit-content;
-    height: 100%;
+    height: 420px;
     padding-block: 10px;
 }
 
@@ -230,8 +288,12 @@ main.container {
 }
 
 .nome-produto {
+    align-items: center;
     color: white;
+    display: flex;
     font-weight: 500;
+    min-height: 42px;
+    height: fit-content;
 }
 
 button {
@@ -264,10 +326,9 @@ button {
 }
 
 .categoria {
-    background-color: #2be6ff;   
     color: rgb(43, 43, 43);
     font-size: 10px;
-    font-weight: 600;
+    font-weight: bold;
     padding: 5px 7px;
     text-transform: uppercase;
     width: fit-content;
@@ -284,8 +345,12 @@ button {
 
 .preco {
     display: block;
-    color: #2be6ff;
+    color: #6dc4f7;
     font-weight: bold;
+}
+
+.categoria, .vitrine .produto button {
+    background-color: #6dc4f7;   
 }
 
 .descricao, .preco {
@@ -314,15 +379,17 @@ input::placeholder {
 }
 
 .b-pesquisar {
-    background-color: var(--roxo-escuro);
+    align-items: center;
+    background-color: #392bff;
     border: none;
-    box-shadow: 0px 5px 20px 0px #8b8b8b73;
-    color: var(--branco-escuro);
+    color: white;
+    display: flex;
+    font-weight: 500;
     transition: 200ms;
 }
 
 .b-pesquisar:hover {
-    background-color: var(--roxo-claro);
+    background-color: #29b9cc;
 }
 
 input[type=search], .b-pesquisar {
@@ -337,7 +404,7 @@ input[type=search], .b-pesquisar {
 
 .carrinho h2 {
     background-color: #FA8BFF;
-    background-image: linear-gradient(130deg, #e7e7e7 0%, #392bff 52%, #2be6ff 90%);
+    background-image: linear-gradient(130deg, #1c2970 0%, #392bff 52%, #29c6db 90%);
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
     color: var(--branco-escuro);
@@ -455,9 +522,75 @@ input[type=search], .b-pesquisar {
 }
 
 footer {
-    background-color: var(--cinza-escuro);
-    height: 200px;
+    border-top: 1px solid rgb(43, 43, 43);
+    color: white;
+    font-size: 16px;
+    height: fit-content;
+    justify-content: center;
+    padding-block: 50px 30px;
     width: 100%;
+}
+
+.footer-wrapper {
+    align-items: center;
+    flex-direction: column;
+    max-width: 1000px;
+    row-gap: 30px;
+    width: 100%;
+}
+
+.quem-somos {
+    width: 100%;
+}
+
+.quem-somos h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.quem-somos p, .quem-somos h2 {
+    text-align: center;
+}
+
+footer h3 {
+    color: white;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+footer, footer div, .redes-sociais, .pagamento {
+    display: flex;
+}
+
+footer, footer div {
+    column-gap: 80px;
+}
+
+footer div {
+    justify-content: space-around;
+    width: 100%;
+}
+
+footer a {
+    color: #29b9cc;
+}
+
+.redes-sociais {
+    column-gap: 10px;
+}
+
+.pagamento {
+    gap: 5px;
+    flex-wrap: wrap;
+    width: 150px;
+}
+
+.pagamento img {
+    width: 40px;
+}
+
+footer small {
+    padding-top: 30px;
 }
 
 
