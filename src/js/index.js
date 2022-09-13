@@ -1,5 +1,6 @@
 import { data } from "./database.js";
 //elementos do dom
+const linkLogo = document.querySelector (".logo").querySelector ("a");
 const bLinks = document.querySelectorAll (".links>li>button");
 const navbar = document.querySelector (".links");
 const hamburguerMenu = document.querySelector (".hamburguer-menu");
@@ -63,6 +64,12 @@ mostraCarrinho ();
 //-------------------
 //LISTENERS:
 //-------------------
+linkLogo.addEventListener ("click", evento => {
+    evento.preventDefault ();
+    localStorage.setItem ("filtro", JSON.stringify (""));
+    window.location.href = "index.html";
+});
+
 navbar.addEventListener ("click", guardarFiltro);
 
 hamburguerMenu.addEventListener ("click", () => {
