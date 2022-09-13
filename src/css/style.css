@@ -291,8 +291,9 @@ main.container {
     align-items: center;
     color: white;
     display: flex;
+    font-size: 14px;
     font-weight: 500;
-    min-height: 42px;
+    min-height: 30px;
     height: fit-content;
 }
 

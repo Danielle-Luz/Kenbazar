@@ -202,7 +202,7 @@ export const data = [
 
   {
     id: 19,
-    img: "src/img/placas-de-video/zatach.jpg",
+    img: "src/img/placas-de-video/zotac.jpg",
     nome: "Placa de Vídeo Zotac NVIDIA GeForce RTX 3060",
     descricao:
       "NVIDIA, RT Cores, GDDR6 e muito mais para melhor desempenho, seu CSS ainda mais bonito na sua máquina! Amplie-se com a ZOTAC GAMING GeForce RTX 30 Series baseada na arquitetura NVIDIA Ampere. Construída com RT Cores e Tensor Cores aprimorados, novos multiprocessadores de streaming e memória GDDR6 de alta velocidade, a ZOTAC GAMING GeForce RTX 3060 Ti Twin Edge LHR faz com que as cores do VS Code sejam ainda mais coloridas",
@@ -223,7 +223,7 @@ export const data = [
   {
     id: 21,
     img: "src/img/placas-de-video/rtx-2060.jpg",
-    nome: "Placa de Vídeo Zotac Gaming NVIDIA GeForce RTX 2060",
+    nome: "Placa de Vídeo Zotac NVIDIA GeForce RTX 2060",
     descricao:
       "A nova geração de placas gráficas ZOTAC GAMING GeForce está aqui. A nova e poderosa GeForce RTX 2060 aproveita a avançada arquitetura NVIDIA Turing para mergulhar você em incrível realismo e desempenho das suas IDES preferidas.",
     especificacoes: "Clock Boost  1680 MHz, Capacidade: 6GB, Clock: 14 Gbps, Resfriamento: Ventilador duplo, Windows 10 / 7 x64",
@@ -232,7 +232,7 @@ export const data = [
   },
   {
     id: 22,
-    img: "src/img/placas-de-video/rtx-2060.jpg",
+    img: "src/img/processadores/i5-1040.jpg",
     nome: "Processador Intel Core i5-10400",
     descricao:
       "Os novos processadores Intel Core da 10ª Geração oferecem atualizações de desempenho incríveis para melhorar a produtividade e permitir que você code sem se preocupar com travamentos durante as 1:1's técnicas. Intel Wi-Fi 6 (Gig) tecnologia, HDR 4K, otimização de sistema inteligentes e muito mais",
@@ -242,7 +242,7 @@ export const data = [
   },
   {
     id: 23,
-    img: "src/img/placas-de-video/ryzen-5-5600g.jpg",
+    img: "src/img/processadores/ryzen-5-5600g.jpg",
     nome: "Processador AMD Ryzen 5 5600G",
     descricao:
       "Esteja você digitando uma página HTML, vendo as rubricas no canvas ou tentando debugar seu código, a velocidade sem precedentes dos processadores AMD Ryzen série 5000 G para desktop é imparável. Com os processadores AMD Ryzen para desktop, você está sempre na frente.",
@@ -252,7 +252,7 @@ export const data = [
   },
   {
     id: 24,
-    img: "src/img/placas-de-video/i5-12400f.jpg",
+    img: "src/img/processadores/i5-12400f.jpg",
     nome: "Processador Intel Core i5-12400F",
     descricao:
       "Processador Intel Core i5-12400F da 12ª Geração para desktop, com compatibilidade com PCIe 5.0 e 4.0, e compatibilidade com DDR5 e DDR4, os processadores Intel Core i5 da 12ª Geração para desktop foram otimizados para devs, e ajudam a oferecer alto desempenho. Agora a quantidade de loops while no seu código não será mais um problema!",
@@ -281,7 +281,7 @@ export const data = [
     categorias: ["Hardware", "SSD"],
   },
   {
-    id: 26,
+    id: 27,
     img: "src/img/ssd/pny.jpg",
     nome: "SSD PNY CS900 SATA 240 GB",
     descricao:
