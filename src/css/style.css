@@ -25,19 +25,26 @@ header {
     padding-block: 20px 15px;
 }
 
+header .container nav {
+    box-sizing: border-box;
+    padding: 15px 10px;   
+}
+
 .banner {
     align-items: center;
     background-position: left;
     background-size: contain;
     background-repeat: no-repeat;
     border-radius: 10px;
+    box-sizing: border-box;
     color: white;
     display: flex;
     margin: 0 auto;
     height: 300px;
     justify-content: space-between;
     margin-top: 50px;
-    width: 1200px;
+    max-width: 1200px;
+    width: 100%;
 }
 
 .banner .texto {
@@ -83,7 +90,8 @@ header {
 }
 
 .banner img {
-    width: 350px;
+    max-width: 350px;
+    width: 100%;
 }
 
 h1, h2, h3, h4 {
@@ -139,12 +147,12 @@ h1, h2, h3, h4 {
 
 .rotacionar .traco{
     position: absolute;
-    transform: rotate(-30deg);
+    transform: rotate(-40deg);
 }
 
 .rotacionar .traco:first-child {
     position: absolute;
-    transform: rotate(30deg);
+    transform: rotate(40deg);
 }
 
 .links {
@@ -293,8 +301,7 @@ main.container {
     display: flex;
     font-size: 14px;
     font-weight: 500;
-    min-height: 30px;
-    height: fit-content;
+    height: 30px;
 }
 
 button {
@@ -524,12 +531,12 @@ input[type=search], .b-pesquisar {
 
 footer {
     border-top: 1px solid rgb(43, 43, 43);
+    box-sizing: border-box;
     color: white;
     font-size: 16px;
     height: fit-content;
     justify-content: center;
-    padding-block: 50px 30px;
-    width: 100%;
+    padding: 50px 20px 30px;
 }
 
 .footer-wrapper {
@@ -537,11 +544,11 @@ footer {
     flex-direction: column;
     max-width: 1000px;
     row-gap: 30px;
-    width: 100%;
 }
 
 .quem-somos {
     width: 100%;
+    padding-bottom: 40px;
 }
 
 .quem-somos h2 {
@@ -583,7 +590,8 @@ footer a {
 .pagamento {
     gap: 5px;
     flex-wrap: wrap;
-    width: 150px;
+    max-width: 150px;
+    width: 100%;
 }
 
 .pagamento img {
@@ -592,10 +600,15 @@ footer a {
 
 footer small {
     padding-top: 30px;
+    text-align: center;
 }
 
 
 @media (max-width: 1215px) {
+    .banner {
+        justify-content: center;
+        padding-inline: 20px;
+    }
     main.container {
         justify-content: center;
     }
@@ -631,35 +644,47 @@ footer small {
     .carrinho-adicionados {
         height: 150px;
     }
+
+    .footer-wrapper {
+        max-width: 600px;
+    }
+
+    .footer-wrapper div {
+        flex-wrap: wrap;
+        row-gap: 20px;
+    }
+
+    .footer-wrapper>div>section, .footer-wrapper nav {
+        max-width: 200px;
+        width: 100%;
+    }
 }
 
 
-@media (max-width: 605px) {
-    main.container {
-        margin: 0 auto;
-        justify-content: center;
+@media (max-width: 800px) {
+    .banner img {
+        display: none;
     }
+}
+
+@media (max-width: 680px) {
     .vitrine {
         width: 100%;
         justify-content: center;
     }
-}
-
-@media (max-width: 585px) {
+    
     .hamburguer-menu {
         display: flex;
     }
 
-    .logo {
-        padding-left: 10px;
+    .logo-menu {
+        padding-inline: 20px;
     }
 
-    nav {
-        background-color: var(--cinza-escuro);
+    header .container nav {
+        background-color: #151e20;
+        border-top: 1px solid rgb(43, 43, 43);
         display: none;
-    }
-
-    .links {
         padding-block: 15px;
     }
 
@@ -667,24 +692,19 @@ footer small {
         width: 100%;
     }
 
-    .links button {
-        color: var(--branco-escuro);
-        text-align: center;
-    }
-
-    .links>li:first-child button:hover, .links .dropdown-ativo, .links-subcategorias {
-        border-radius: 0;
+    .logo-menu, .logo-wrapper, .links {
+        flex-direction: row;
     }
 
     header, header .container {
         padding: 0;
     }
 
-    header .container {
-        row-gap: 0;
+    .links {
+        display: flex;
     }
 
-    header div, .links {
+    header div {
         flex-direction: column;
         row-gap: 10px;
     }
@@ -692,5 +712,43 @@ footer small {
     input[type=search] {
         width: 100%;
     }
+}
 
+
+@media (max-width: 535px) {
+    .footer-wrapper>div>section, .footer-wrapper nav {
+        max-width: 150px;
+    }
+}
+
+
+@media (max-width: 450px) {
+    .banner {
+        display: none;
+    }
+
+    header .container nav {
+        padding: 0;
+    }
+
+    .links {
+        flex-direction: column;
+        padding: 0;
+    }
+
+    .links-subcategorias, .links .dropdown-ativo, .links button, .links>li:first-child button:hover {
+        border-radius: 0;
+    }
+
+    .links-subcategorias {
+        background-image: linear-gradient(255deg, rgb(17, 49, 68) 0%, rgb(17, 15, 27) 100%);
+    }
+
+    .links-subcategorias {
+        box-shadow: 0 15px 20px -15px rgb(12, 11, 19);
+    }
+
+    .links-subcategorias button {
+        color: white;
+    }
 }
