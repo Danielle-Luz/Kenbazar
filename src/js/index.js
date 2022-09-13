@@ -18,6 +18,10 @@ if (filtroNaoExiste) {
     localStorage.setItem ("filtro", JSON.stringify (""));
 }
 
+if (!localStorage.getItem ("carrinho")) {
+    localStorage.setItem ("carrinho", JSON.stringify ([]));
+}
+
 //fazendo cópia da lista de produtos
 let listaProdutos = data.slice (0);
 
@@ -69,9 +73,6 @@ vitrine.addEventListener ("click", evento => {
         const estaNoCarrinho = carrinhoAdicionados.querySelector (`#carrinho_${id + 1}`);
         if (!estaNoCarrinho) {
             const produto = data[id];
-            if (!localStorage.getItem ("carrinho")) {
-                localStorage.setItem ("carrinho", JSON.stringify ([]));
-            }
             const carrinho = JSON.parse (localStorage.getItem ("carrinho"));
             carrinho.push (produto);
             localStorage.setItem ("carrinho", JSON.stringify (carrinho));
@@ -198,25 +199,25 @@ function renderizarProdutos (lista, funcaoCriacao) {
 }
 
 function criarProdutoVitrine (produto) {
-    let figure = document.createElement ("figure");
+    let itemLista = document.createElement ("li");
     const id = `vitrine_${produto.id}`;
-    figure.className = "produto";
-    figure.id = id;
-    figure.innerHTML = `
-    <div class="div-imagem">
-        <img src="${produto.img}" alt="${produto.alt}" width="100" height="100">
-    </div>
-    <figcaption>
-        <ul class="lista-categorias">
-        </ul>
-        <h2 class="nome-produto">${produto.nome}</h2>
-        <p class="descricao">${produto.descricao}</p>
-        <span class="preco">R$ ${produto.valor.toFixed (2)}</span>
-        <button class="b-adicionar">Adicionar ao carrinho</button>
-    </figcaption>`;
-    vitrine.appendChild (figure)
-    figure = document.getElementById (id);
-    const listaCategorias = figure.querySelector (".lista-categorias");
+    itemLista.innerHTML = `
+    <figure class="produto" id="vitrine_${produto.id}">
+        <div class="div-imagem">
+            <img src="${produto.img}" alt="${produto.alt}" width="100" height="100">
+        </div>
+        <figcaption>
+            <ul class="lista-categorias">
+            </ul>
+            <h2 class="nome-produto">${produto.nome}</h2>
+            <p class="descricao">${produto.descricao}</p>
+            <span class="preco">R$ ${produto.valor.toFixed (2)}</span>
+            <button class="b-adicionar">Adicionar ao carrinho</button>
+        </figcaption>
+    </figure>`;
+    vitrine.appendChild (itemLista)
+    itemLista = document.getElementById (id);
+    const listaCategorias = itemLista.querySelector (".lista-categorias");
     const categoriasProduto = produto.categorias;
     for (let categoria of categoriasProduto) {
         listaCategorias.insertAdjacentHTML ("beforeend",`<li><small class="categoria">${categoria}</small></li>`);
@@ -224,24 +225,24 @@ function criarProdutoVitrine (produto) {
 }
 
 function criarProdutoCarrinho (produto) {
-    let figure = document.createElement ("figure");
-    figure.className = "produto";
-    figure.id = `carrinho_${produto.id}`;
-    figure.innerHTML = `
-    <div class="div-imagem">
-        <img src="${produto.img}" alt="${produto.alt}">
+    let itemLista = document.createElement ("li");
+    itemLista.innerHTML = `
+    <figure class="produto" id="carrinho_${produto.id}">
+        <div class="div-imagem">
+            <img src="${produto.img}" alt="${produto.alt}">
         </div>
-    <figcaption>
-        <h4 class="nome-produto">${produto.nome}</h4>
-        <span class="preco">R$ ${produto.valor.toFixed (2)}</span>
-        <div class="container-quantidade">
-        <button class="b-diminuir">-</button>
-        <input type="text" value="1" disabled>
-        <button class="b-aumentar">+</button>
-        </div>
-        <button class="b-remover">Remover produto</button>
-    </figcaption>`
-    carrinhoAdicionados.appendChild (figure);
+        <figcaption>
+            <h4 class="nome-produto">${produto.nome}</h4>
+            <span class="preco">R$ ${produto.valor.toFixed (2)}</span>
+            <div class="container-quantidade">
+            <button class="b-diminuir">-</button>
+            <input type="text" value="1" disabled>
+            <button class="b-aumentar">+</button>
+            </div>
+            <button class="b-remover">Remover produto</button>
+        </figcaption>
+    </figure>`
+    carrinhoAdicionados.appendChild (itemLista);
 }
 
 function alterarQuantidadeTotal (quantidade, tipoAlteracao) {
