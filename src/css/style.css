@@ -242,6 +242,11 @@ main.container {
     border-radius: 5px;
 }
 
+.vitrine::-webkit-scrollbar-track {
+    background-color: rgb(13 38 52);
+    border-radius: 5px;
+}
+
 .vitrine>li, .botao-wrapper {
     background-image: linear-gradient(130deg, #e7e7e7 0%, #392bff 52%, #2be6ff 90%); 
     border-radius: 5px;
@@ -382,6 +387,7 @@ form {
 input[type=search] {
     background-color: white;
     border: 2px solid transparent;
+    font-size: 14px;
     flex-grow: 1;
 }
 
@@ -465,6 +471,10 @@ input[type=search], .b-pesquisar {
 .carrinho-adicionados::-webkit-scrollbar-thumb {
     background-color: rgb(158, 158, 158);
     border-radius: 10px;
+}
+
+.carrinho-adicionados::-webkit-scrollbar-track {
+    background-color: rgb(202, 202, 202);
 }
 
 .carrinho-adicionados .produto {
