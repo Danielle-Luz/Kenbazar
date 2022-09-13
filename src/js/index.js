@@ -87,6 +87,8 @@ vitrine.addEventListener ("click", evento => {
             const produtosCarrinho = carrinhoAdicionados.querySelectorAll (".produto");
             alterarValorTotal (1, "+", [produtosCarrinho[produtosCarrinho.length - 1]]);
         }
+    } else {
+        guardarFiltro (evento);
     }
 });
 
@@ -170,21 +172,20 @@ botaoPesquisar.addEventListener ("click", evento => {
     }
 });
 
-footer.addEventListener ("click", evento => {
-    guardarFiltro (evento);
-    window.scrollTo (0, 0);
-});
+footer.addEventListener ("click", guardarFiltro);
 
 
 //-------------------
 //DECLARAÇÕES DE FUNÇÕES:
 //-------------------
 function guardarFiltro (evento) {
-    if (evento.target.tagName == "BUTTON") {
+    if (evento.target.tagName == "BUTTON" && evento.target.className != "b-adicionar") {
         let botao = evento.target;
         let filtro = botao.innerText != "Todos" ? botao.innerText : "";
-        localStorage.setItem ("filtro", JSON.stringify (filtro));
+        let filtroNormalizado = filtro != "" ? filtro.toLowerCase () : "";
+        localStorage.setItem ("filtro", JSON.stringify (filtroNormalizado));
         window.location.reload ();
+        window.scrollTo (0, 0);
     }
 }
 
@@ -202,8 +203,11 @@ function filtrarElementos (filtro, lista) {
         return lista;
     } else {
         lista = lista.filter (produto => {
+            const listaNormalizada = produto.categorias.map (categoria => {
+                return categoria.toLowerCase ();
+            })
             //só inclui o produto na lista se o filtro atual for uma das suas categorias
-            return produto.categorias.includes (filtro);
+            return listaNormalizada.includes (filtro);
         });
         return lista;
     }
@@ -238,7 +242,7 @@ function criarProdutoVitrine (produto) {
     const listaCategorias = itemLista.querySelector (".lista-categorias");
     const categoriasProduto = produto.categorias;
     for (let categoria of categoriasProduto) {
-        listaCategorias.insertAdjacentHTML ("beforeend",`<li><small class="categoria">${categoria}</small></li>`);
+        listaCategorias.insertAdjacentHTML ("beforeend",`<li><button class="categoria">${categoria}</button></li>`);
     }
 }
 
