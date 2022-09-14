@@ -175,6 +175,9 @@ botaoPesquisar.addEventListener ("click", evento => {
                 resultadosPesquisa.push (produto);
             }
         }
+        if (!resultadosPesquisa.length) {
+            vitrine.innerHTML = "<p class='nenhum-resultado'>Nenhum resultado encontrado</p>"
+        }
         renderizarProdutos (resultadosPesquisa, criarProdutoVitrine);
     }
 });

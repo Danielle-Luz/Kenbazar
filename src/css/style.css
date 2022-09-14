@@ -212,10 +212,18 @@ main.container {
 }
 
 .vitrine {
+    align-items: center;
     display: flex;
     gap: 30px 10px;
     width: 790px;
     overflow: auto;
+}
+
+.nenhum-resultado {
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    width: 100%;
 }
 
 .vitrine, aside {
