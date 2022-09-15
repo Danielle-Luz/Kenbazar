@@ -7,14 +7,14 @@ const hamburguerMenu = document.querySelector (".hamburguer-menu");
 const vitrine = document.querySelector (".vitrine");
 const botaoPesquisar = document.querySelector (".b-pesquisar");
 const carrinhoAdicionados = document.querySelector (".carrinho-adicionados");
-const carrinhoVazio = document.querySelector (".carrinho-vazio");
 const footer = document.querySelector ("footer");
-
 //obtenção de filtro ativos
 const filtro = JSON.parse (localStorage.getItem ("filtro"));
+const campoPesquisa = document.getElementById ("campo-pesquisa");
+let listaProdutos = data.slice (0);
+
 //tentando converter possível falsy value em true
-const filtroNaoExiste = !filtro;
-if (filtroNaoExiste) {
+if (!filtro) {
     //setando lista vazia no local storage caso não exista
     localStorage.setItem ("filtro", JSON.stringify (""));
 }
@@ -24,7 +24,6 @@ if (!localStorage.getItem ("carrinho")) {
 }
 
 //fazendo cópia da lista de produtos
-let listaProdutos = data.slice (0);
 
 //exibição do dropdown
 for (let botao of bLinks) {
@@ -113,6 +112,7 @@ carrinhoAdicionados.addEventListener ("click", evento => {
         localStorage.setItem ("carrinho", JSON.stringify (carrinho));
         produto.remove ();
         if (carrinhoAdicionados.querySelectorAll ("figure").length == 0) {
+            const carrinhoVazio = document.querySelector (".carrinho-vazio");
             carrinhoVazio.classList.remove ("hidden");
             carrinhoAdicionados.parentNode.closest ("section").classList.add ("hidden");
         }
@@ -145,40 +145,50 @@ carrinhoAdicionados.addEventListener ("click", evento => {
     }
 });
 
-botaoPesquisar.addEventListener ("click", evento => {
-    evento.preventDefault ();
-    const campoPesquisa = document.getElementById ("campo-pesquisa");
+campoPesquisa.addEventListener ("input", evento => {
     const resultadosPesquisa = [];
     if (campoPesquisa.value) {
         //limpando elementos na vitrine
         vitrine.innerHTML = "";
-        //vitrine.parentNode.insertAdjacentHTML ("beforebegin", "<h1>Resultados de busca</h1>");
         let palavrasChavePesquisa = campoPesquisa.value.split (" ");
-        //normalizando cada palavra no campo de busca
-        palavrasChavePesquisa = palavrasChavePesquisa.map ( palavraChave => {
-            return palavraChave.toLowerCase ();
-        });
-
+        console.log (palavrasChavePesquisa);
         for (let produto of data) {
             const categorias = produto.categorias;
-            const palavrasNomeProduto = produto.nome.split (" ");
-            let quantidadePalavrasIguais = palavrasNomeProduto.filter (palavra => {
-                //verifica se uma das palavras no nome do produto é uma das palavras no campo de busca
-                return palavrasChavePesquisa.includes (palavra.toLowerCase ());
+            let palavrasProduto = produto.nome.split (" ");
+            for (let categoria of categorias) {
+                for (let i = categoria.length; i >= 0 ; i--) {
+                    const indexEncontrado = palavrasProduto.findIndex ( palavra => {
+                        return categoria.substring (0, i) == palavra;
+                    });
+                    if (indexEncontrado != -1) {
+                        console.log (indexEncontrado)
+                        palavrasProduto.splice (indexEncontrado, 1);
+                    }
+                }
+            }
+            palavrasProduto = palavrasProduto.concat (categorias);
+            //para evitar que strings vazias (falsy values) persistam no array
+            palavrasChavePesquisa = palavrasChavePesquisa.filter (palavra => {
+                return palavra;
+            });
+            let quantidadePalavrasIguais = palavrasProduto.filter (palavra => {
+                return palavrasChavePesquisa.filter (palavraChave => {
+                    return compararPalavra (palavraChave, palavra);
+                }).length > 0;
             }).length;
-            quantidadePalavrasIguais += categorias.filter (categoria => {
-                //verifica se uma das categorias é igual a uma das palavras no campo de busca
-                return palavrasChavePesquisa.includes (categoria.toLowerCase ());
-            }).length;
-            //verifica se o nome do produto ou as categorias têm pelo menos as palavras no campo de busca
+            //verifica se o nome do produto + as categorias têm pelo menos as palavras presentes no campo de busca
             if (quantidadePalavrasIguais >= palavrasChavePesquisa.length) {
                 resultadosPesquisa.push (produto);
             }
         }
+        renderizarProdutos (resultadosPesquisa, criarProdutoVitrine);
         if (!resultadosPesquisa.length) {
             vitrine.innerHTML = "<p class='nenhum-resultado'>Nenhum resultado encontrado</p>"
         }
-        renderizarProdutos (resultadosPesquisa, criarProdutoVitrine);
+    } else {
+        vitrine.innerHTML = "";
+        listaProdutos = filtrarElementos ("", data);
+        renderizarProdutos (listaProdutos, criarProdutoVitrine);
     }
 });
 
@@ -188,6 +198,20 @@ footer.addEventListener ("click", guardarFiltro);
 //-------------------
 //DECLARAÇÕES DE FUNÇÕES:
 //-------------------
+function compararPalavra (palavraChave, palavra) {
+    for (let i = 0; i < palavra.length; i++) {
+        let letrasRestantes = palavra.length - i;
+        if (letrasRestantes >= palavraChave.length) {
+            let pedaco = palavra.substring (i, i + palavraChave.length);
+            if (pedaco.toLowerCase () == palavraChave.toLowerCase ()) {
+                return true;
+            }
+        } else {
+            return false;
+        }
+    }
+}
+
 function guardarFiltro (evento) {
     if (evento.target.tagName == "BUTTON" && evento.target.className != "b-adicionar") {
         let botao = evento.target;
@@ -202,6 +226,7 @@ function guardarFiltro (evento) {
 //função pra exibir ou mostrar a div "carrinho vazio"
 function mostraCarrinho () {
     if (carrinhoAdicionados.querySelectorAll ("figure").length > 0) {
+        const carrinhoVazio = document.querySelector (".carrinho-vazio");
         carrinhoVazio.classList.add ("hidden");
         carrinhoAdicionados.parentNode.closest ("section").classList.remove ("hidden");
     }
@@ -243,7 +268,7 @@ function criarProdutoVitrine (produto) {
             </ul>
             <h2 class="nome-produto">${produto.nome}</h2>
             <p class="descricao">${produto.descricao}</p>
-            <span class="preco">R$ ${produto.valor.toFixed (2)}</span>
+            <span class="preco">${produto.valor.toLocaleString ("pt-BR", {style: "currency", currency: "BRL"})}</span>
             <button class="b-adicionar">Adicionar ao carrinho</button>
         </figcaption>
     </figure>`;
@@ -265,7 +290,7 @@ function criarProdutoCarrinho (produto) {
         </div>
         <figcaption>
             <h4 class="nome-produto">${produto.nome}</h4>
-            <span class="preco">R$ ${produto.valor.toFixed (2)}</span>
+            <span class="preco">${produto.valor.toLocaleString ("pt-BR", {style: "currency", currency: "BRL"})}</span>
             <div class="container-quantidade">
             <button class="b-diminuir">-</button>
             <input type="text" value="1" disabled>
@@ -290,7 +315,8 @@ function alterarQuantidadeTotal (quantidade, tipoAlteracao) {
 function alterarValorTotal (quantidade, tipoAlteracao, produtos) {
     const carrinhoTotal = document.getElementById ("carrinho-total");
     for (let produto of produtos) {
-        const precoProduto = parseFloat (produto.querySelector (".preco").innerText.split (" ")[1]);
+        const precoProduto = Number (produto.querySelector (".preco").innerText.split ("\xa0")[1].replace (".", "").replace(",", "."));
+        console.log (produto.querySelector (".preco").innerText.split("\xa0"));
         const valorAtual = parseFloat (carrinhoTotal.innerText.split (" ")[1]);
 
         if (tipoAlteracao == "+") {

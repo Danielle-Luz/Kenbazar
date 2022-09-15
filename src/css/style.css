@@ -163,6 +163,7 @@ h1, h2, h3, h4 {
     border-radius: 10px;
     color: white;
     font-size: 16px;
+    font-weight: 500;
 }
 
 .links>li>button {
@@ -174,7 +175,6 @@ h1, h2, h3, h4 {
     border-radius: 10px;
     border: 0;
     color: rgb(17, 15, 27);
-    font-weight: bold;
 }
 
 .links .dropdown-ativo {
@@ -213,10 +213,12 @@ main.container {
 
 .vitrine {
     align-items: center;
+    box-sizing: border-box;
     display: flex;
     gap: 30px 10px;
-    width: 790px;
     overflow: auto;
+    padding-inline: 10px;
+    width: 790px;
 }
 
 .nenhum-resultado {
