@@ -1,4 +1,4 @@
-<h1 align="center">Insert generator</h1>
+<h1 align="center">Kenbazar</h1>
 
 <p align="center">
     <img alt="Badge indicando que o projeto foi criado em julho de 2022" src="https://img.shields.io/badge/Data%20de%20cria%C3%A7%C3%A3o-Setembro%2F2022-blue">
